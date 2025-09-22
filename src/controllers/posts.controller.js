@@ -11,8 +11,8 @@ class PostsController {
 
     async getPosts(req, res) {
         try {
-            const { id } = req.params
-            const object = { id: id }
+            const { id_user } = req.params
+            const object = { id_user: id_user }
 
             const posts = await post.getPosts(object)
             return response.QuerySuccess(res, posts)
