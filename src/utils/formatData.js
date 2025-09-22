@@ -25,7 +25,13 @@ const formatNumberInvalid = (number) => {
     return !numberRegex.test(number) ? true : false
 }
 
+const formatTextInvalid = (text) => {
+    const textRegex = /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ¿?.+,:_%/\s-]+$/
+    return !textRegex.test(text) ? true : false
+}
+
 module.exports = {
     formatEmailInvalid, formatPasswordInvalid, formatDataEmpty,
-    formatNamesInvalid, formatPhoneInvalid, formatNumberInvalid
+    formatNamesInvalid, formatPhoneInvalid, formatNumberInvalid,
+    formatTextInvalid
 }

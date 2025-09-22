@@ -16,20 +16,20 @@ const ItemCreated = (res, details) => {
     })
 }
 
-const ParamsConflict = (res, details) => {
+const ResConflict = (res, details) => {
     res.status(409).json({
         success: false,
-        code: 'PARAMETERS_CONFLICT',
-        message: 'Some parameters conflict.',
+        code: 'RESOURCE_CONFLICT', // Más específico
+        message: 'The resource already exists or conflicts with existing data.',
         details: details
     })
 }
 
-const ParamUndefined = (res, details) => {
-    res.status(404).json({
+const BadRequest = (res, details) => {
+    res.status(400).json({
         success: false,
-        code: 'PARAMETERS_UNDEFINED',
-        message: 'Some parameters are not defined.',
+        code: 'BAD_REQUEST',
+        message: 'The request was invalid.',
         details: details
     })
 }
@@ -37,9 +37,9 @@ const ParamUndefined = (res, details) => {
 const ParametersInvalid = (res, details) => {
     res.status(422).json({
         success: false,
-        code: 'PARAMETERS_INVALID',
-        message: 'Some parameters are invalid.',
-        details: details
+        code: 'VALIDATION_ERROR',
+        message: 'Parameter validation failed.',
+        details: details // Aquí deberían ir los errores específicos
     })
 }
 
@@ -71,6 +71,6 @@ const ErrorInternal = (res, details) => {
 }
 
 module.exports = {
-    ParamUndefined, ParametersInvalid, ItemNotFound, QuerySuccess, ParamsConflict, ItemCreated,
+    BadRequest, ParametersInvalid, ItemNotFound, QuerySuccess, ResConflict, ItemCreated,
     ErrorAuthorization, ErrorInternal
 }

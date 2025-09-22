@@ -9,6 +9,10 @@ const middleware = require('../middlewares/posts.middleware')
 const PostsController = require('../controllers/posts.controller')
 const controller = new PostsController()
 
-router.get('/posts/:id_user', auth.ValidateTokenAccess, middleware.GetPostsUser, controller.getPosts)
+router.get('/posts/:id_user', auth.ValidateTokenAccess, middleware.GetPostsUser, controller.getPostsByAuthor)
+
+router.post('/posts', auth.ValidateTokenAccess, middleware.CreatePost, controller.createPost)
+
+router.delete('/posts/:id_post', auth.ValidateTokenAccess, middleware.DeletePost, controller.deletePost)
 
 module.exports = router
