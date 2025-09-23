@@ -8,6 +8,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 const posts = require('./routes/posts.route')
 const auth = require('./routes/auth.route')
 const register = require('./routes/register.route')
+const user = require('./routes/user.route')
 
 // inicializacion del app
 const app = express()
@@ -26,5 +27,6 @@ const urlBase = "/blog/api"
 app.use(urlBase, posts)
 app.use(urlBase, auth)
 app.use(urlBase, register)
+app.use(urlBase, user)
 
 module.exports = app

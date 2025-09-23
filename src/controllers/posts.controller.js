@@ -1,9 +1,9 @@
 // requires
 const response = require('../utils/responses')
-const Post = require('../services/posts.service')
 
-// instancias de modelos
-const post = new Post()
+const UserService = require('../services/user.service')
+const user = new UserService()
+
 
 // clase controller
 class PostsController {
@@ -14,7 +14,7 @@ class PostsController {
             const { authorPostEmail } = req.params
             const object = { author_post: authorPostEmail }
 
-            const posts = await post.getPostsByAuthor(object)
+            const posts = await user.getPostsByAuthor(object)
             return response.QuerySuccess(res, posts)
 
         } catch (error) {
@@ -28,7 +28,7 @@ class PostsController {
             const { author, title, content } = req.body
             const object = { author_post: author, title: title, content: content }
 
-            const result = await post.createPost(object)
+            const result = await user.createPost(object)
             return response.ItemCreated(res, result)
 
         } catch (error) {
@@ -43,7 +43,7 @@ class PostsController {
             const { id_post } = req.params
             const object = { id_post: id_post }
 
-            await post.deletePost(object)
+            await user.deletePost(object)
             return response.QuerySuccess(res, "The post was deleted successfully.")
 
         } catch (error) {
@@ -65,7 +65,7 @@ class PostsController {
             const { title, content } = req.body
             const object = { id_post: id_post, title: title, content: content }
 
-            await post.updatePost(object)
+            await user.updatePost(object)
             return response.QuerySuccess(res, "The post was updated successfully.")
 
         } catch (error) {

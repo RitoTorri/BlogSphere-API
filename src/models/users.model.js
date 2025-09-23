@@ -14,6 +14,28 @@ class UsersModel {
             return result.rows[0]
         } catch (error) { throw error }
     }
-}
 
+    async getUsersSearch(object) {
+        try {
+            const query = `SELECT name || ' ' || lastname AS Nombre_y_apellido, email, photo, biography FROM users WHERE name || ' ' || lastname LIKE $1 AND active = true ORDER BY name ASC LIMIT 10`
+            const params = [`%${object.name}%`]
+
+            const result = await pool.query(query, params)
+            return result.rows
+        } catch (error) { throw error }
+    }
+
+    async createComment(object) {
+        const query = 'INSERT INTO comments (author_comment, post_id, content) VALUES ($1, $2, $3) RETURNING author_comment, post_id, content, date_created'
+        const params = [object.author_comment, object.post_id, object.content]
+
+        try {
+            const result = await pool.query(query, params)
+
+            if (result.rows.length === 0) throw new Error('Comment not created.')
+            return result.rows[0]
+
+        } catch (error) { throw error }
+    }
+}
 module.exports = UsersModel
