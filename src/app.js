@@ -5,7 +5,9 @@ const morgan = require('morgan')
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
 // Rutas de la API
-const posts = require('./routes/post.route')
+const posts = require('./routes/posts.route')
+const auth = require('./routes/auth.route')
+const register = require('./routes/register.route')
 
 // inicializacion del app
 const app = express()
@@ -22,5 +24,7 @@ app.use(morgan('dev'))
 const urlBase = "/blog/api"
 
 app.use(urlBase, posts)
+app.use(urlBase, auth)
+app.use(urlBase, register)
 
 module.exports = app

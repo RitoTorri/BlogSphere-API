@@ -5,8 +5,8 @@ class PostsModel {
 
     async getPostsByAuthor(object) {
         try {
-            const query = 'SELECT id_user AS "id_author", id AS "id_Post", title, content, date_created FROM posts WHERE id_user = $1 AND active = true ORDER BY id_user ASC'
-            const params = [object.id_user]
+            const query = 'SELECT author_post, id AS "id_Post", title, content, date_created FROM posts WHERE author_post = $1 AND active = true ORDER BY id ASC'
+            const params = [object.author_post]
 
             const result = await pool.query(query, params)
             return result.rows
@@ -16,7 +16,7 @@ class PostsModel {
 
     async getPostById(object) {
         try {
-            const query = 'SELECT id_user AS "id_author", id AS "id_Post", title, content, date_created FROM posts WHERE id = $1 AND active = true'
+            const query = 'SELECT author_post, id AS "id_Post", title, content, date_created FROM posts WHERE id = $1 AND active = true'
             const params = [object.id_post]
 
             const result = await pool.query(query, params)
@@ -26,8 +26,8 @@ class PostsModel {
     }
 
     async createPost(object) {
-        const query = 'INSERT INTO posts (id_user, title, content) VALUES ($1, $2, $3) RETURNING id_user, id, title, content, date_created'
-        const params = [object.id_user, object.title, object.content]
+        const query = 'INSERT INTO posts (author_post, title, content) VALUES ($1, $2, $3) RETURNING author_post, id, title, content, date_created'
+        const params = [object.author_post, object.title, object.content]
 
         try {
             const result = await pool.query(query, params)

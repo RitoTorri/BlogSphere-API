@@ -3,16 +3,16 @@ const response = require('../utils/responses')
 const validator = require('../utils/formatData')
 
 const GetPostsUser = (req, res, next) => {
-    const { id_user } = req.params
+    const { authorPostEmail } = req.params
 
-    if (validator.formatNumberInvalid(id_user)) {
-        return response.ParametersInvalid(res, 'The id is invalid. It must be a number.')
+    if (validator.formatEmailInvalid(authorPostEmail)) {
+        return response.ParametersInvalid(res, 'The email is invalid.')
     }
     next()
 }
 
 const CreatePost = (req, res, next) => {
-    const { id_user, title, content } = req.body
+    const { author, title, content } = req.body
 
     let error = false
     let details = []
@@ -27,9 +27,14 @@ const CreatePost = (req, res, next) => {
         details.push('We need a content.')
     }
 
-    if (validator.formatNumberInvalid(id_user)) {
+    if (validator.formatDataEmpty(author)) {
         error = true
-        details.push('The id is invalid. It must be a number.')
+        details.push('We need an author.')
+    }
+
+    if (validator.formatEmailInvalid(author)) {
+        error = true
+        details.push('The author email is invalid.')
     }
 
     if (validator.formatTextInvalid(title)) {

@@ -39,7 +39,7 @@ const ParametersInvalid = (res, details) => {
         success: false,
         code: 'VALIDATION_ERROR',
         message: 'Parameter validation failed.',
-        details: details // Aquí deberían ir los errores específicos
+        details: details
     })
 }
 

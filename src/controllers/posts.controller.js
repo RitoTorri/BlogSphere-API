@@ -11,8 +11,8 @@ class PostsController {
 
     async getPostsByAuthor(req, res) {
         try {
-            const { id_user } = req.params
-            const object = { id_user: id_user }
+            const { authorPostEmail } = req.params
+            const object = { author_post: authorPostEmail }
 
             const posts = await post.getPostsByAuthor(object)
             return response.QuerySuccess(res, posts)
@@ -25,8 +25,8 @@ class PostsController {
 
     async createPost(req, res) {
         try {
-            const { id_user, title, content } = req.body
-            const object = { id_user: id_user, title: title, content: content }
+            const { author, title, content } = req.body
+            const object = { author_post: author, title: title, content: content }
 
             const result = await post.createPost(object)
             return response.ItemCreated(res, result)

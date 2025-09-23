@@ -10,7 +10,7 @@ const PostsController = require('../controllers/posts.controller')
 const controller = new PostsController()
 
 // Obtiene los posts por id de un usuario
-router.get('/posts/:id_user', auth.ValidateTokenAccess, middleware.GetPostsUser, controller.getPostsByAuthor)
+router.get('/posts/:authorPostEmail', auth.ValidateTokenAccess, middleware.GetPostsUser, controller.getPostsByAuthor)
 
 // Crea un post
 router.post('/posts', auth.ValidateTokenAccess, middleware.CreatePost, controller.createPost)
