@@ -50,6 +50,19 @@ class PostsModel {
 
         } catch (error) { throw error }
     }
+
+    async updatePost(object) {
+        const query = 'Update posts SET title = $1, content = $2 WHERE id = $3 AND active = true RETURNING id, title, content'
+        const params = [object.title, object.content, object.id_post]
+
+        try {
+            const result = await pool.query(query, params)
+
+            if (result.rowCount === 0) throw new Error('Error updating post.')
+            return result.rows[0]
+
+        } catch (error) { throw error }
+    }
 }
 
 module.exports = PostsModel 

@@ -38,6 +38,16 @@ class Post {
             return await model.deletePost(object)
         } catch (error) { throw error }
     }
+
+    async updatePost(object) {
+        try {
+            // validar que el post exista
+            const post = await model.getPostById(object)
+            if (post.length === 0) throw new Error('Post not found.')
+
+            return await model.updatePost(object)
+        } catch (error) { throw error }
+    }
 }
 
 module.exports = Post 

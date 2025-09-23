@@ -58,6 +58,26 @@ class PostsController {
             return response.ErrorInternal(res, error.message)
         }
     }
+
+    async updatePost(req, res) {
+        try {
+            const { id_post } = req.params
+            const { title, content } = req.body
+            const object = { id_post: id_post, title: title, content: content }
+
+            await post.updatePost(object)
+            return response.QuerySuccess(res, "The post was updated successfully.")
+
+        } catch (error) {
+            if (error.message === 'Post not found.')
+                return response.ItemNotFound(res, 'Not found a post with this id.')
+
+            if (error.message === 'Error updating post.')
+                return response.BadRequest(res, 'Error updating post, make sure to submit the correct parameters.')
+
+            return response.ErrorInternal(res, error.message)
+        }
+    }
 }
 
 module.exports = PostsController
