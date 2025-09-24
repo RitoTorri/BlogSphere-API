@@ -20,6 +20,8 @@ class PostsModel {
             const params = [object.id_post]
 
             const result = await pool.query(query, params)
+            if (result.rows.length === 0) throw new Error('Post not found.')
+
             return result.rows
 
         } catch (error) { throw error }
@@ -60,6 +62,17 @@ class PostsModel {
 
             if (result.rowCount === 0) throw new Error('Error updating post.')
             return result.rows[0]
+
+        } catch (error) { throw error }
+    }
+
+    async getCommentsByPostId(object) {
+        try {
+            const query = 'SELECT id, author_comment, content, date_created FROM comments WHERE post_id = $1 AND active = true ORDER BY id ASC'
+            const params = [object.post_id]
+
+            const result = await pool.query(query, params)
+            return result.rows
 
         } catch (error) { throw error }
     }

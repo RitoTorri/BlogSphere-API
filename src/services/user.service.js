@@ -46,10 +46,9 @@ class User {
     async deletePost(object) {
         try {
             // validar que el post exista
-            const post = await model.getPostById(object)
-            if (post.length === 0) throw new Error('Post not found.')
-
+            await model.getPostById(object)
             return await model.deletePost(object)
+
         } catch (error) { throw error }
     }
 
@@ -57,9 +56,8 @@ class User {
         try {
             // validar que el post exista
             const post = await model.getPostById(object)
-            if (post.length === 0) throw new Error('Post not found.')
-
             return await model.updatePost(object)
+
         } catch (error) { throw error }
     }
 
@@ -74,20 +72,35 @@ class User {
         } catch (error) { throw error }
     }
 
+    async getCommentsByPostId(object) {
+        try {
+            // validar que el post exista
+            await model.getPostById({ id_post: object.post_id })
+            return await model.getCommentsByPostId(object)
+
+        } catch (error) { throw error }
+    }
+
     async getUsersSearch(object) {
         try {
-            const users = await user.getUsersSearch(object)
-            return users
+            return await user.getUsersSearch(object)
         } catch (error) { throw error }
     }
 
     async createComment(object) {
         try {
-            const postExist = await model.getPostById({ id_post: object.post_id })
-            if (postExist.length === 0) throw new Error('Post not found.')
+            await user.getUser({ author_post: object.author_comment })
+            await model.getPostById({ id_post: object.post_id })
 
-            const result = await user.createComment(object)
-            return result
+            return await user.createComment(object)
+        } catch (error) { throw error }
+    }
+
+    async deleteComment(object) {
+        try {
+            await user.getCommentById(object)
+            return await user.deleteComment(object)
+
         } catch (error) { throw error }
     }
 }

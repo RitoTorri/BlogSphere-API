@@ -12,6 +12,9 @@ const controller = new PostsController()
 // Obtiene los posts por id de un usuario
 router.get('/posts/:authorPostEmail', auth.ValidateTokenAccess, middleware.GetPostsUser, controller.getPostsByAuthor)
 
+// Obtiene los comentarios de un post
+router.get('/posts/comments/:post_id', auth.ValidateTokenAccess, controller.getCommentsByPostId)
+
 // Crea un post
 router.post('/posts', auth.ValidateTokenAccess, middleware.CreatePost, controller.createPost)
 

@@ -29,8 +29,23 @@ class UserController {
             return response.ItemCreated(res, result)
 
         } catch (error) {
+            if (error.message === 'User not found.') return response.ItemNotFound(res, 'Not found a user with this id.')
             if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
             if (error.message === 'Comment not created.') return response.BadRequest(res, 'The comment was not created.')
+            return response.ErrorInternal(res, error.message)
+        }
+    }
+
+    async deleteComment(req, res) {
+        try {
+            const { id_comment } = req.params
+            const object = { id: id_comment }
+
+            await user.deleteComment(object)
+            response.QuerySuccess(res, "the comment deleted successfully.")
+        } catch (error) {
+            if (error.message === 'Comment not found.') return response.ItemNotFound(res, 'Not found a comment with this id.')
+            if (error.message === 'Error deleting comment.') return response.BadRequest(res, 'Error deleting comment, make sure to submit the correct parameters.')
             return response.ErrorInternal(res, error.message)
         }
     }

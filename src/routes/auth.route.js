@@ -10,5 +10,4 @@ const controller = new AuthController()
 // Routes
 router.get('/login', middleware.ValidateLogin, controller.login)
 
-
 module.exports = router

@@ -5,8 +5,12 @@ const auth = require('../middlewares/auth.middleware')
 const Controller = require('../controllers/user.controller')
 const controller = new Controller()
 
-router.get('/users', auth.ValidateTokenAccess, middleware.GetUsers, controller.getUsers)
+// endpoint para buscar usuarios en la barra de busqueda
+router.get('/users/search', auth.ValidateTokenAccess, middleware.GetUsers, controller.getUsers)
 
-router.post('/users', auth.ValidateTokenAccess, middleware.createdComment, controller.createComment)
+// endpoint para hacer commentarios a los post
+router.post('/users/comment', auth.ValidateTokenAccess, middleware.createdComment, controller.createComment)
+
+router.delete('/users/comment/:id_comment', auth.ValidateTokenAccess, controller.deleteComment)
 
 module.exports = router

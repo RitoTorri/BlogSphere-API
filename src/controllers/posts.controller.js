@@ -78,6 +78,20 @@ class PostsController {
             return response.ErrorInternal(res, error.message)
         }
     }
+
+    async getCommentsByPostId(req, res) {
+        try {
+            const { post_id } = req.params
+            const object = { post_id: post_id }
+
+            const comments = await user.getCommentsByPostId(object)
+            return response.QuerySuccess(res, comments)
+
+        } catch (error) {
+            if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
+            return response.ErrorInternal(res, error.message)
+        }
+    }
 }
 
 module.exports = PostsController
