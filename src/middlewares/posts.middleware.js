@@ -4,10 +4,7 @@ const validator = require('../utils/formatData')
 
 const GetPostsUser = (req, res, next) => {
     const { authorPostEmail } = req.params
-
-    if (validator.formatEmailInvalid(authorPostEmail)) {
-        return response.ParametersInvalid(res, 'The email is invalid.')
-    }
+    if (validator.formatEmailInvalid(authorPostEmail)) return response.ParametersInvalid(res, 'The email is invalid.')
     next()
 }
 
@@ -55,9 +52,8 @@ const CreatePost = (req, res, next) => {
 const DeletePost = (req, res, next) => {
     const { id_post } = req.params
 
-    if (validator.formatNumberInvalid(id_post)) {
-        return response.ParametersInvalid(res, 'The id is invalid. It must be a number.')
-    }
+    if (validator.formatNumberInvalid(id_post)) return response.ParametersInvalid(res, 'The id is invalid. It must be a number.')
+
     next()
 }
 
@@ -98,5 +94,11 @@ const UpdatePost = (req, res, next) => {
     next()
 }
 
+const getCommentsByPostId = (req, res, next) => {
+    const { post_id } = req.params
+    if (validator.formatNumberInvalid(post_id)) return response.ParametersInvalid(res, 'The post id is invalid. It must be a number.')
+    next()
+}
 
-module.exports = { GetPostsUser, CreatePost, DeletePost, UpdatePost }
+
+module.exports = { GetPostsUser, CreatePost, DeletePost, UpdatePost, getCommentsByPostId }

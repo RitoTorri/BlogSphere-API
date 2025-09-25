@@ -48,16 +48,14 @@ class User {
             // validar que el post exista
             await model.getPostById(object)
             return await model.deletePost(object)
-
         } catch (error) { throw error }
     }
 
     async updatePost(object) {
         try {
             // validar que el post exista
-            const post = await model.getPostById(object)
+            await model.getPostById(object)
             return await model.updatePost(object)
-
         } catch (error) { throw error }
     }
 
@@ -65,10 +63,7 @@ class User {
         try {
             // validar que el usuario exista
             await user.getUser(object)
-
-            const posts = await model.getPostsByAuthor(object)
-            return posts
-
+            return await model.getPostsByAuthor(object)
         } catch (error) { throw error }
     }
 
@@ -100,7 +95,6 @@ class User {
         try {
             await user.getCommentById(object)
             return await user.deleteComment(object)
-
         } catch (error) { throw error }
     }
 }

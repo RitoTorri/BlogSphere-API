@@ -59,7 +59,6 @@ class UsersModel {
             if (result.rowCount === 0) throw new Error('Error deleting comment.')
 
             return result.rows[0]
-
         } catch (error) { throw error }
     }
 }

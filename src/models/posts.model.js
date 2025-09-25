@@ -6,11 +6,9 @@ class PostsModel {
     async getPostsByAuthor(object) {
         try {
             const query = 'SELECT author_post, id AS "id_Post", title, content, date_created FROM posts WHERE author_post = $1 AND active = true ORDER BY id ASC'
-            const params = [object.author_post]
 
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [object.author_post])
             return result.rows
-
         } catch (error) { throw error }
     }
 
@@ -42,14 +40,11 @@ class PostsModel {
 
     async deletePost(object) {
         const query = 'Update posts SET active = false WHERE id = $1 AND active = true'
-        const params = [object.id_post]
-
         try {
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [object.id_post])
 
             if (result.rowCount === 0) throw new Error('Error deleting post.')
             return result.rows[0]
-
         } catch (error) { throw error }
     }
 
@@ -62,7 +57,6 @@ class PostsModel {
 
             if (result.rowCount === 0) throw new Error('Error updating post.')
             return result.rows[0]
-
         } catch (error) { throw error }
     }
 

@@ -47,14 +47,8 @@ class PostsController {
             return response.QuerySuccess(res, "The post was deleted successfully.")
 
         } catch (error) {
-            if (error.message === 'Post not found.') {
-                return response.ItemNotFound(res, 'Not found a post with this id.')
-            }
-
-            if (error.message === 'Error deleting post.') {
-                return response.BadRequest(res, 'Error deleting post, make sure to submit the correct parameters.')
-            }
-
+            if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
+            if (error.message === 'Error deleting post.') return response.BadRequest(res, 'Error deleting post, make sure to submit the correct parameters.')
             return response.ErrorInternal(res, error.message)
         }
     }
@@ -69,12 +63,8 @@ class PostsController {
             return response.QuerySuccess(res, "The post was updated successfully.")
 
         } catch (error) {
-            if (error.message === 'Post not found.')
-                return response.ItemNotFound(res, 'Not found a post with this id.')
-
-            if (error.message === 'Error updating post.')
-                return response.BadRequest(res, 'Error updating post, make sure to submit the correct parameters.')
-
+            if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
+            if (error.message === 'Error updating post.') return response.BadRequest(res, 'Error updating post, make sure to submit the correct parameters.')
             return response.ErrorInternal(res, error.message)
         }
     }

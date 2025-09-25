@@ -11,6 +11,7 @@ router.get('/users/search', auth.ValidateTokenAccess, middleware.GetUsers, contr
 // endpoint para hacer commentarios a los post
 router.post('/users/comment', auth.ValidateTokenAccess, middleware.createdComment, controller.createComment)
 
-router.delete('/users/comment/:id_comment', auth.ValidateTokenAccess, controller.deleteComment)
+// endpoint para borrar un commentario
+router.delete('/users/comment/:id_comment', auth.ValidateTokenAccess, middleware.deleteComment, controller.deleteComment)
 
 module.exports = router

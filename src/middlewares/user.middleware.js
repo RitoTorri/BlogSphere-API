@@ -36,4 +36,10 @@ const createdComment = async (req, res, next) => {
     next()
 }
 
-module.exports = { GetUsers, createdComment }
+const deleteComment = async (req, res, next) => {
+    const { id_comment } = req.params
+    if (validator.formatNumberInvalid(id_comment)) return response.ParametersInvalid(res, 'The id_comment parameter is invalid.')
+    next()
+}
+
+module.exports = { GetUsers, createdComment, deleteComment }
