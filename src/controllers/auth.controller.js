@@ -18,7 +18,7 @@ class AuthController {
 
         } catch (error) {
             if (error.message === 'User not found.') return response.ItemNotFound(res, 'Not found a user with this email.')
-            if (error.message === 'Password not valid.') return response.BadRequest(res, 'Password not valid.')
+            if (error.message === 'Password not valid.') return response.BadRequest(res, 'Password incorrect.')
             return response.ErrorInternal(res, error.message)
         }
     }

@@ -14,10 +14,7 @@ class UserController {
             const users = await user.getUsersSearch(object)
             return response.QuerySuccess(res, users)
 
-        } catch (error) {
-            if (error.message === 'User not found.') return response.ItemNotFound(res, 'Not found a user with this id.')
-            return response.ErrorInternal(res, error.message)
-        }
+        } catch (error) { return response.ErrorInternal(res, error.message) }
     }
 
     async createComment(req, res) {
@@ -47,7 +44,7 @@ class UserController {
 
         } catch (error) {
             if (error.message === 'Comment not found.') return response.ItemNotFound(res, 'Not found a comment with this id.')
-            if (error.message === 'Error deleting comment.') return response.BadRequest(res, 'Error deleting comment, you are not the author of this comment.')
+            if (error.message === 'Error deleting comment.') return response.UnauthorizedEdit(res, 'Error deleting comment, you are not the author of this comment.')
             return response.ErrorInternal(res, error.message)
         }
     }

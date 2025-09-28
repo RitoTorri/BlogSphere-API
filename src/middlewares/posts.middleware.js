@@ -8,6 +8,8 @@ const CreatePost = (req, res, next) => {
     let error = false
     let details = []
 
+    if (!title || !content) return response.BadRequest(res, 'The title and content are required.')
+
     if (validator.formatDataEmpty(title)) {
         error = true
         details.push('We need a title.')
@@ -45,6 +47,8 @@ const UpdatePost = (req, res, next) => {
     let error = false
     let details = []
 
+    if (!id_post && !title && !content) return response.BadRequest(res, 'The id, title and content are required.')
+
     if (title || title === "") {
         if (validator.formatDataEmpty(title)) {
             error = true
@@ -80,6 +84,7 @@ const UpdatePost = (req, res, next) => {
 
 const getCommentsByPostId = (req, res, next) => {
     const { post_id } = req.params
+    if (!post_id) return response.BadRequest(res, 'The post id is required.')
     if (validator.formatNumberInvalid(post_id)) return response.ParametersInvalid(res, 'The post id is invalid. It must be a number.')
     next()
 }

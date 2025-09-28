@@ -70,7 +70,16 @@ const ErrorInternal = (res, details) => {
     })
 }
 
+const UnauthorizedEdit = (res, details) => {
+    res.status(403).json({
+        success: false,
+        code: 'UNAUTHORIZED_EDIT',
+        message: 'You are not authorized to edit this resource.',
+        details: details
+    })
+}
+
 module.exports = {
     BadRequest, ParametersInvalid, ItemNotFound, QuerySuccess, ResConflict, ItemCreated,
-    ErrorAuthorization, ErrorInternal
+    ErrorAuthorization, ErrorInternal, UnauthorizedEdit
 }

@@ -7,23 +7,23 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
 
 const ValidateTokenAccess = (req, res, next) => {
     const { authorization } = req.headers
-    if (!authorization) return response.ParametersInvalid(res, 'The authorization header is required.')
+    if (!authorization) return response.BadRequest(res, 'The token authentication is required.')
 
     try {
         const parts = authorization.split(' ');
         if (parts.length !== 2 || parts[0] !== 'Bearer') {
-            return response.ParametersInvalid(res, 'The token is invalid. It must be a Bearer token.')
+            return response.ErrorAuthorization(res, 'The token is invalid. It must be a Bearer token.')
         }
 
         const token = parts[1]
-        if (!token) return response.ParametersInvalid(res, 'The token is required.')
+        if (!token) return response.ErrorAuthorization(res, 'The token is required.')
 
         const decoded = jwt.verify(token, process.env.ACCESS_KEY)
         req.user = decoded
         next()
 
     } catch (error) {
-        return response.ErrorInternal(res, error.message)
+        return response.ErrorAuthorization(res, error.message)
     }
 }
 
@@ -33,7 +33,7 @@ const ValidateLogin = (req, res, next) => {
     let details = []
 
     if (!email || !password) {
-        return response.ParametersInvalid(res, 'The email and password are required.')
+        return response.BadRequest(res, 'The email and password are required.')
     }
 
     if (validator.formatEmailInvalid(email)) {

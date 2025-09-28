@@ -6,89 +6,157 @@
     "description": "Esta API permite subir y visualizar posts en un blog. Ademas de permitir modificar tu usaurio, buscar otros usuarios y hacer comentarios a otros posts/blogs."
   },
   "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "basePath": "/blog/api",
+  "schemes": ["http"],
   "paths": {
-    "/blog/api/posts/me": {
+    "/posts/me": {
       "get": {
-        "description": "",
+        "summary": "Obtener posts de el usuario autenticado",
+        "description": "Retorna todos los posts creados por el usuario actualmente autenticado",
+        "tags": ["Posts"],
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Devuelve todos los posts creados por el usuario autenticado"
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera"
+          },
+          "404": {
+            "description": "No se encontró ningún usuario con el id proporcionado en el token de autenticación"
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/posts/comments/{post_id}": {
+    "/posts/comments/{post_id}": {
       "get": {
-        "description": "",
+        "summary": "Obtener todos los comentarios de un post",
+        "description": "Retorna todos los comentarios de un post especificado",
+        "tags": ["Posts"],
         "parameters": [
           {
             "name": "post_id",
             "in": "path",
+            "description": "Id del post del cual que se quiere obtener los comentarios",
             "required": true,
             "type": "string"
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "Devuelve todos los comentarios de un post especificado"
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera"
+          },
+          "404": {
+            "description": "No se encontro un post con el id proporcionado en la ruta"
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
+          },
+          "422" : {
+            "description": "Error en el formato del id del post."
+          } 
         }
       }
     },
-    "/blog/api/posts": {
+    "/posts": {
       "post": {
-        "description": "",
+        "summary": "Crear un post",
+        "description": "Crea un nuevo post en el blog, perteneciente al usuario autenticado",
+        "tags": ["Posts"],
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Este es un titulo de ejemplo"
                 },
                 "content": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Este es un contenido de ejemplo"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "El post fue creado correctamente, Enviando los datos del post"
+          },
+          "422" : {
+            "description": "Error en el formato de los datos del post."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta el contenido o el titulo del post. El post no se logro crear."
+          },
+          "404": {
+            "description": "El usuario que quiere crear el post no existe"
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/posts/{id_post}": {
+    "/posts/{id_post}": {
       "delete": {
-        "description": "",
+        "summary": "Elimina un post",
+        "description": "Elimina un post especificado por su id",
+        "tags": ["Posts"],
         "parameters": [
           {
             "name": "id_post",
+            "description": "Id del post que se quiere eliminar",
             "in": "path",
             "required": true,
             "type": "string"
@@ -96,20 +164,43 @@
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "El post fue eliminado correctamente."
+          },
+          "422" : {
+            "description": "Error en el formato del id del post."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta de parametros o el id del post."
+          },
+          "404": {
+            "description": "El post no existe"
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       },
       "patch": {
-        "description": "",
+        "summary": "Actualiza un post",
+        "description": "Actualiza un post especificado por su id",
+        "tags": ["Posts"],
         "parameters": [
           {
             "name": "id_post",
+            "description": "Id del post que se quiere eliminar",
             "in": "path",
             "required": true,
             "type": "string"
@@ -117,183 +208,331 @@
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           },
           {
             "name": "body",
             "in": "body",
+            "required": "Por lo menos un de los campos debe estar presente",
+            "description": "EL titulo o el contenido que se desea actualizar",
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Mi nuevo titulo"
                 },
                 "content": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Mi nuevo contenido"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "El post fue actualizado correctamente."
+          },
+          "422" : {
+            "description": "Error en el formato de los datos del post."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta de parametros para la actualización del post."
+          },
+          "404": {
+            "description": "El post no existe"
+          },
+          "409": {
+            "description": "El post no se puede actualizar porque no es el autor del post."
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/login": {
+    "/login": {
       "post": {
-        "description": "",
+        "summary": "Login de un usuario",
+        "description": "Login de un usuario, retorna el token de autenticación",
+        "tags": ["Auth"],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "El email y la contraseña del usuario que se quiere autenticar",
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "mi@email.com"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "miPassword"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Devuelve el token de autenticación"
+          },
+          "422" : {
+            "description": "Error en el formato del email o la contraseña solicitadas."
+          },
+          "400": {
+            "description": "Falta el email o la contraseña solicitadas. Tambien posible contraseña incorrecta."
+          },
+          "404": {
+            "description" : "NO existe un usuario con este correo electronico."
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/register": {
+    "/register": {
       "post": {
-        "description": "",
+        "summary": "Registro de un usuario",
+        "description": "Registro de un usuario en la base de datos.",
+        "tags": ["Register"],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "El email, la contraseña, el nombre y el apellido del usuario que se quiere registrar",
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "mi@email.com"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "miPassword"
                 },
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Mi nombre"
                 },
                 "lastname": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Mi apellido"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "El usuario fue creado correctamente."
+          },
+          "422" : {
+            "description": "Error en el formato los parametros solicitados."
+          },
+          "400": {
+            "description": "Faltan algunos parametros solicitados."
+          },
+          "409": {
+            "description": "Ya existe un usuario con ese email."
+          },
+          "500" : {
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/users/search/{name}": {
+    "/users/search/{name}": {
       "get": {
-        "description": "",
+        "summary": "Busca un usuario por su nombre de perfil",
+        "description": "Busca un usuario por su nombre de perfil, retorna los usaurios que coincidan o se asemejen a ese nombre",
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "name",
             "in": "path",
             "required": true,
-            "type": "string"
+            "description": "Nombre del usuario que se quiere buscar",
+            "schema": {
+              "type": "string",
+              "example": "Jesus Cortez"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "400" : {
+            "description": "Falta el nombre de usuario en la ruta o el token de autenticacion fue enviado"
+          },
+          "200": {
+            "description": "Devuelve todos los usuarios que coinciden con el nombre de usuario"
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "500" : { 
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/users/comment/{post_id}": {
+    "/users/comment/{post_id}": {
       "post": {
-        "description": "",
+        "summary": "Crea un comentario a un post",
+        "description": "Crea un comentario a un post especificado por su id",
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "post_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "description": "Id del post del cual que se quiere crear un comentario",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "El email del autor del comentario y el contenido del comentario",
             "schema": {
               "type": "object",
               "properties": {
                 "author_comment": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "jesus@gmail.com"
                 },
                 "content": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Te quedo mal. :D"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "El comentario fue creado correctamente."
+          },
+          "422" : {
+            "description": "Error en el formato del email del autor del comentario o el contenido del comentario."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta el email del autor del comentario y el contenido del comentario. No se pudo crear el comentario."
+          }, 
+          "404": {
+            "description": "El post no existe y el autor del comentario no existe"
+          },
+          "500" : { 
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/users/comment/{id_comment}": {
+    "/users/comment/{id_comment}": {
       "delete": {
-        "description": "",
+        "summary": "Elimina un comentario",
+        "description": "Elimina un comentario especificado por su id",
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "id_comment",
             "in": "path",
             "required": true,
-            "type": "string"
+            "description": "Id del comentario que se quiere eliminar",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "El comentario fue eliminado correctamente."
+          },
+          "422" : {
+            "description": "Error en el formato del id del comentario."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta de parametros o el id del comentario o Error al eliminar le comentario."
+          },
+          "404": {
+            "description": "El comentario no existe"
+          },
+          "500" : { 
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }
     },
-    "/blog/api/users/edit/profile": {
+    "/users/edit/profile": {
       "patch": {
-        "description": "",
+        "summary": "Actualiza el perfil de un usuario",
+        "description": "Actualiza el perfil de un usuario especificado por su id",
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "description": "Token de autenticacion con los datos del usuario",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJJIUz..."
+            }
           },
           {
             "name": "body",
@@ -302,27 +541,47 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "jesus@gmail.com"
                 },
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Jesus"
                 },
                 "lastname": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Cortez"
                 },
                 "biography": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Mi biografia"
                 },
                 "photo": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "El perfil fue actualizado correctamente. Te devuelve un nuevo token de acceso."
+          },
+          "422" : {
+            "description": "Error en el formato de los datos del perfil."
+          },
+          "401": { 
+            "description": "El formato del token es incorrecto, debe comenzar con Bearer"
+          },
+          "400": {
+            "description": "Falta el token de autenticacion, enviado en la cabecera. Falta de parametros para la actualización del perfil."
+          },
+          "409": {
+            "description": "El email que se quiere actualizar ya existe."
+          },
+          "500" : { 
+            "description": "Error interno del servidor. Posible error en conexión con la base de datos."
           }
         }
       }

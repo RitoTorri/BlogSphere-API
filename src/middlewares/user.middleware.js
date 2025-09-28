@@ -3,7 +3,7 @@ const validator = require('../utils/formatData')
 
 const GetUsers = async (req, res, next) => {
     const { name } = req.params
-    if (!name) return response.ParametersInvalid(res, 'The name parameter is required.')
+    if (!name) return response.BadRequest(res, 'The name parameter is required.')
     if (validator.formatTextInvalid(name)) return response.ParametersInvalid(res, 'The name parameter is invalid.')
     next()
 }
