@@ -42,14 +42,14 @@ class PostsController {
     async deletePost(req, res) {
         try {
             const { id_post } = req.params
-            const object = { id_post: id_post }
+            const object = { id_post: id_post, author_post: req.user.email }
 
             await user.deletePost(object)
             return response.QuerySuccess(res, "The post was deleted successfully.")
 
         } catch (error) {
             if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
-            if (error.message === 'Error deleting post.') return response.BadRequest(res, 'Error deleting post, make sure to submit the correct parameters.')
+            if (error.message === 'Error deleting post.') return response.BadRequest(res, 'ERROR deleting post, be sure to send the correct parameters. Also, make sure you are the author of this post.')
             return response.ErrorInternal(res, error.message)
         }
     }
@@ -60,8 +60,6 @@ class PostsController {
             const { title, content } = req.body
 
             const object = { id_post: id_post, title: title, content: content, author_post: req.user.email }
-            console.log(object)
-
             await user.updatePost(object)
             return response.QuerySuccess(res, "The post was updated successfully.")
 

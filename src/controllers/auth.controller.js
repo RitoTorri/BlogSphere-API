@@ -14,7 +14,7 @@ class AuthController {
             const object = { email: email, password: password }
 
             const result = await user.login(object)
-            return response.QuerySuccess(res, result)
+            return response.QuerySuccess(res, "Token Access: " + result)
 
         } catch (error) {
             if (error.message === 'User not found.') return response.ItemNotFound(res, 'Not found a user with this email.')

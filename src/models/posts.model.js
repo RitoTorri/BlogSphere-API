@@ -37,9 +37,9 @@ class PostsModel {
 
     async deletePost(object) {
         try {
-            const query = 'Update posts SET active = false WHERE id = $1 AND active = true'
+            const query = 'Update posts SET active = false WHERE id = $1 AND active = true AND author_post = $2 RETURNING id, title, content'
 
-            const result = await pool.query(query, [object.id_post])
+            const result = await pool.query(query, [object.id_post, object.author_post])
             if (result.rowCount === 0) throw new Error('Error deleting post.')
 
             return result.rows[0]

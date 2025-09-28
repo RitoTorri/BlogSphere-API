@@ -8,6 +8,6 @@ const AuthController = require('../controllers/auth.controller')
 const controller = new AuthController()
 
 // Routes
-router.get('/login', middleware.ValidateLogin, controller.login)
+router.post('/login', middleware.ValidateLogin, controller.login)
 
 module.exports = router

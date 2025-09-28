@@ -1,9 +1,6 @@
 const { pool } = require('../config/db')
 const bcrypt = require('bcrypt')
-const path = require('path')
-const jwt = require('jsonwebtoken')
-
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
+const GenToken = require('../utils/tokenGen')
 
 class AuthModel {
     constructor() { }
@@ -19,15 +16,7 @@ class AuthModel {
             const validationPassword = await bcrypt.compare(object.password, result.rows[0].password)
             if (!validationPassword) throw new Error('Password not valid.')
 
-            const token = jwt.sign({
-                id: result.rows[0].id,
-                email: result.rows[0].email,
-                name: result.rows[0].name,
-                lastname: result.rows[0].lastname,
-                photo: result.rows[0].photo,
-                biography: result.rows[0].biography
-            }, process.env.ACCESS_KEY, { expiresIn: '3h' })
-
+            const token = GenToken.GenToken(result.rows[0])
             return token
         } catch (error) { throw error }
     }

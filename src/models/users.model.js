@@ -1,4 +1,5 @@
 const { pool } = require('../config/db')
+const GenToken = require('../utils/tokenGen')
 
 const modelPosts = require("./posts.model")
 const Post = new modelPosts()
@@ -63,9 +64,9 @@ class UsersModel {
 
     async deleteComment(object) {
         try {
-            const query = 'UPDATE comments SET active = false WHERE id = $1'
+            const query = 'UPDATE comments SET active = false WHERE id = $1 AND author_comment = $2'
 
-            const result = await pool.query(query, [object.id])
+            const result = await pool.query(query, [object.id, object.author_comment])
             if (result.rowCount === 0) throw new Error('Error deleting comment.')
 
             return result.rows[0]
@@ -116,11 +117,11 @@ class UsersModel {
 
             const result = await pool.query(query, params)
             if (result.rowCount === 0) throw new Error('Error updating profile.')
-            return result.rows[0]
-        } catch (error) {
-            console.log(error)
-            throw error
-        }
+
+            const token = GenToken.GenToken(result.rows[0])
+            return token
+
+        } catch (error) { throw error }
     }
 }
 module.exports = UsersModel
