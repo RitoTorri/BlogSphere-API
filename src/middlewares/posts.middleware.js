@@ -3,7 +3,9 @@ const response = require('../utils/responses')
 const validator = require('../utils/formatData')
 
 const GetPostsUser = (req, res, next) => {
+    const { authorization } = req.headers
     const { authorPostEmail } = req.params
+    console.log(authorization)
     if (validator.formatEmailInvalid(authorPostEmail)) return response.ParametersInvalid(res, 'The email is invalid.')
     next()
 }
@@ -51,9 +53,7 @@ const CreatePost = (req, res, next) => {
 
 const DeletePost = (req, res, next) => {
     const { id_post } = req.params
-
     if (validator.formatNumberInvalid(id_post)) return response.ParametersInvalid(res, 'The id is invalid. It must be a number.')
-
     next()
 }
 
@@ -90,7 +90,6 @@ const UpdatePost = (req, res, next) => {
     }
 
     if (error) return response.ParametersInvalid(res, details)
-
     next()
 }
 

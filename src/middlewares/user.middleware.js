@@ -2,10 +2,9 @@ const response = require('../utils/responses')
 const validator = require('../utils/formatData')
 
 const GetUsers = async (req, res, next) => {
-    const { name } = req.body
-
-    if (!name) return response.BadRequest(res, 'The name parameter is required.')
-    if (validator.formatTextInvalid(name)) return response.BadRequest(res, 'The name parameter is invalid.')
+    const { name } = req.params
+    if (!name) return response.ParametersInvalid(res, 'The name parameter is required.')
+    if (validator.formatTextInvalid(name)) return response.ParametersInvalid(res, 'The name parameter is invalid.')
     next()
 }
 
@@ -42,4 +41,52 @@ const deleteComment = async (req, res, next) => {
     next()
 }
 
-module.exports = { GetUsers, createdComment, deleteComment }
+const editProfile = async (req, res, next) => {
+    const { id_user } = req.params
+    const { email, name, lastname, biography, photo } = req.body
+
+    let error = false
+    let details = []
+
+    if (!email && !name && !lastname && !biography && !photo) {
+        return response.ParametersInvalid(res, "The email, name, lastname, biography and photo parameters are required.")
+    }
+
+    if (validator.formatNumberInvalid(id_user)) {
+        error = true
+        details.push('The id_user parameter is invalid.')
+    }
+
+    if (email) {
+        if (validator.formatEmailInvalid(email)) {
+            error = true
+            details.push('The email parameter is invalid.')
+        }
+    }
+
+    if (name) {
+        if (validator.formatNamesInvalid(name)) {
+            error = true
+            details.push('The name parameter is invalid.')
+        }
+    }
+
+    if (lastname) {
+        if (validator.formatNamesInvalid(lastname)) {
+            error = true
+            details.push('The lastname parameter is invalid.')
+        }
+    }
+
+    if (biography) {
+        if (validator.formatTextInvalid(biography)) {
+            error = true
+            details.push('The biography parameter is invalid.')
+        }
+    }
+
+    if (error) return response.ParametersInvalid(res, details)
+    next()
+}
+
+module.exports = { GetUsers, createdComment, deleteComment, editProfile }

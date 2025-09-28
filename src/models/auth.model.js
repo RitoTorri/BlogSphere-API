@@ -10,7 +10,7 @@ class AuthModel {
 
     async login(object) {
         try {
-            const query = 'SELECT id, email, password, name, lastname FROM users WHERE email = $1 AND active = true'
+            const query = 'SELECT id, email, password, name, lastname, photo, biography FROM users WHERE email = $1 AND active = true'
             const params = [object.email]
 
             const result = await pool.query(query, params)
@@ -23,8 +23,10 @@ class AuthModel {
                 id: result.rows[0].id,
                 email: result.rows[0].email,
                 name: result.rows[0].name,
-                lastname: result.rows[0].lastname
-            }, process.env.ACCESS_KEY, { expiresIn: '1h' })
+                lastname: result.rows[0].lastname,
+                photo: result.rows[0].photo,
+                biography: result.rows[0].biography
+            }, process.env.ACCESS_KEY, { expiresIn: '3h' })
 
             return token
         } catch (error) { throw error }

@@ -97,6 +97,13 @@ class User {
             return await user.deleteComment(object)
         } catch (error) { throw error }
     }
+
+    async editProfile(object) {
+        try {
+            await user.getUserById(object)
+            return await user.editProfile(object)
+        } catch (error) { throw error }
+    }
 }
 
 module.exports = User
