@@ -6,12 +6,11 @@ const Post = new modelPosts()
 class UsersModel {
     constructor() { }
 
-    async getUser(object) {
+    async getUserByEmail(object) {
         try {
             const query = "SELECT * FROM users WHERE email = $1 AND active = true"
-            const params = [object.author_post]
 
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [object.author_post])
             if (result.rows.length === 0) throw new Error('User not found.')
 
             return result.rows[0]
@@ -21,9 +20,8 @@ class UsersModel {
     async getUserById(object) {
         try {
             const query = 'SELECT * FROM users WHERE id = $1 AND active = true'
-            const params = [object.id]
 
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [object.id])
             if (result.rows.length === 0) throw new Error('User not found.')
 
             return result.rows[0]
@@ -33,9 +31,8 @@ class UsersModel {
     async getUsersSearch(object) {
         try {
             const query = `SELECT name || ' ' || lastname AS Nombre_y_apellido, email, photo, biography FROM users WHERE name || ' ' || lastname LIKE $1 AND active = true ORDER BY name ASC LIMIT 10`
-            const params = [`%${object.name}%`]
 
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [`%${object.name}%`])
             return result.rows
         } catch (error) { throw error }
     }
@@ -58,19 +55,17 @@ class UsersModel {
 
         try {
             const result = await pool.query(query, params)
-
             if (result.rows.length === 0) throw new Error('Comment not created.')
-            return result.rows[0]
 
+            return result.rows[0]
         } catch (error) { throw error }
     }
 
     async deleteComment(object) {
         try {
             const query = 'UPDATE comments SET active = false WHERE id = $1'
-            const params = [object.id]
 
-            const result = await pool.query(query, params)
+            const result = await pool.query(query, [object.id])
             if (result.rowCount === 0) throw new Error('Error deleting comment.')
 
             return result.rows[0]
@@ -117,12 +112,13 @@ class UsersModel {
             query += updates.join(', ')
             count++
             query += ` WHERE id = $${count} AND active = true RETURNING id, email, name, lastname, biography, photo`
-            params.push(object.id)
+            params.push(object.id_user)
 
             const result = await pool.query(query, params)
             if (result.rowCount === 0) throw new Error('Error updating profile.')
             return result.rows[0]
         } catch (error) {
+            console.log(error)
             throw error
         }
     }

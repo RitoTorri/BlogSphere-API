@@ -22,7 +22,8 @@ class UserController {
 
     async createComment(req, res) {
         try {
-            const { post_id, author_comment, content } = req.body
+            const { post_id } = req.params
+            const { author_comment, content } = req.body
             const object = { post_id: post_id, author_comment: author_comment, content: content }
 
             const result = await user.createComment(object)
@@ -43,6 +44,7 @@ class UserController {
 
             await user.deleteComment(object)
             response.QuerySuccess(res, "the comment deleted successfully.")
+
         } catch (error) {
             if (error.message === 'Comment not found.') return response.ItemNotFound(res, 'Not found a comment with this id.')
             if (error.message === 'Error deleting comment.') return response.BadRequest(res, 'Error deleting comment, make sure to submit the correct parameters.')
@@ -52,11 +54,9 @@ class UserController {
 
     async editProfile(req, res) {
         try {
-            const { id_user } = req.params
             const { email, name, lastname, biography, photo } = req.body
-            const object = {}
+            const object = { id_user: req.user.id }
 
-            if (id_user) object.id = id_user
             if (email) object.email = email
             if (name) object.name = name
             if (lastname) object.lastname = lastname

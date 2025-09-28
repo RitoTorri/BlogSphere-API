@@ -9,7 +9,8 @@ const GetUsers = async (req, res, next) => {
 }
 
 const createdComment = async (req, res, next) => {
-    const { post_id, author_comment, content } = req.body
+    const { post_id } = req.params
+    const { author_comment, content } = req.body
 
     let error = false
     let details = []
@@ -42,7 +43,6 @@ const deleteComment = async (req, res, next) => {
 }
 
 const editProfile = async (req, res, next) => {
-    const { id_user } = req.params
     const { email, name, lastname, biography, photo } = req.body
 
     let error = false
@@ -50,11 +50,6 @@ const editProfile = async (req, res, next) => {
 
     if (!email && !name && !lastname && !biography && !photo) {
         return response.ParametersInvalid(res, "The email, name, lastname, biography and photo parameters are required.")
-    }
-
-    if (validator.formatNumberInvalid(id_user)) {
-        error = true
-        details.push('The id_user parameter is invalid.')
     }
 
     if (email) {

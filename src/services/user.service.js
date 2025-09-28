@@ -9,10 +9,10 @@ const RegisterModel = require('../models/register.model')
 const registerModel = new RegisterModel()
 
 const PostsModel = require('../models/posts.model')
-const model = new PostsModel()
+const postModel = new PostsModel()
 
 const UsersModel = require('../models/users.model')
-const user = new UsersModel()
+const userModel = new UsersModel()
 
 // Clase
 class User {
@@ -36,72 +36,72 @@ class User {
     async createPost(object) {
         try {
             // validar que el usuario exista
-            await user.getUser(object)
-
-            const result = await model.createPost(object)
-            return result
+            await userModel.getUserByEmail(object)
+            return await postModel.createPost(object)
         } catch (error) { throw error }
     }
 
     async deletePost(object) {
         try {
             // validar que el post exista
-            await model.getPostById(object)
-            return await model.deletePost(object)
+            await postModel.getPostById(object)
+            return await postModel.deletePost(object)
         } catch (error) { throw error }
     }
 
     async updatePost(object) {
         try {
             // validar que el post exista
-            await model.getPostById(object)
-            return await model.updatePost(object)
+            await postModel.getPostById(object)
+            return await postModel.updatePost(object)
         } catch (error) { throw error }
     }
 
     async getPostsByAuthor(object) {
         try {
             // validar que el usuario exista
-            await user.getUser(object)
-            return await model.getPostsByAuthor(object)
+            await userModel.getUserByEmail(object)
+            return await postModel.getPostsByAuthor(object)
+
         } catch (error) { throw error }
     }
 
     async getCommentsByPostId(object) {
         try {
             // validar que el post exista
-            await model.getPostById({ id_post: object.post_id })
-            return await model.getCommentsByPostId(object)
+            await postModel.getPostById({ id_post: object.post_id })
+            return await postModel.getCommentsByPostId(object)
 
         } catch (error) { throw error }
     }
 
     async getUsersSearch(object) {
         try {
-            return await user.getUsersSearch(object)
+            return await userModel.getUsersSearch(object)
         } catch (error) { throw error }
     }
 
     async createComment(object) {
         try {
-            await user.getUser({ author_post: object.author_comment })
-            await model.getPostById({ id_post: object.post_id })
+            // validar que el usuario que comento el post exista
+            await userModel.getUserByEmail({ author_post: object.author_comment })
+            await postModel.getPostById({ id_post: object.post_id })
 
-            return await user.createComment(object)
+            return await userModel.createComment(object)
         } catch (error) { throw error }
     }
 
     async deleteComment(object) {
         try {
-            await user.getCommentById(object)
-            return await user.deleteComment(object)
+            await userModel.getCommentById(object) // validar que el comentario exista
+            return await userModel.deleteComment(object)
         } catch (error) { throw error }
     }
 
     async editProfile(object) {
         try {
-            await user.getUserById(object)
-            return await user.editProfile(object)
+            await userModel.getUserById({ id: object.id_user })
+            return await userModel.editProfile(object)
         } catch (error) { throw error }
     }
 }

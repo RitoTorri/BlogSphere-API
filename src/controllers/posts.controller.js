@@ -1,8 +1,8 @@
 // requires
 const response = require('../utils/responses')
 
-const UserService = require('../services/user.service')
-const user = new UserService()
+const User = require('../services/user.service')
+const user = new User()
 
 
 // clase controller
@@ -11,8 +11,8 @@ class PostsController {
 
     async getPostsByAuthor(req, res) {
         try {
-            const { authorPostEmail } = req.params
-            const object = { author_post: authorPostEmail }
+            const user_req = req.user
+            const object = { author_post: user_req.email }
 
             const posts = await user.getPostsByAuthor(object)
             return response.QuerySuccess(res, posts)
@@ -25,8 +25,9 @@ class PostsController {
 
     async createPost(req, res) {
         try {
-            const { author, title, content } = req.body
-            const object = { author_post: author, title: title, content: content }
+            const { title, content } = req.body
+            const object = { author_post: req.user.email, title: title, content: content }
+            console.log(object)
 
             const result = await user.createPost(object)
             return response.ItemCreated(res, result)
@@ -57,14 +58,16 @@ class PostsController {
         try {
             const { id_post } = req.params
             const { title, content } = req.body
-            const object = { id_post: id_post, title: title, content: content }
+
+            const object = { id_post: id_post, title: title, content: content, author_post: req.user.email }
+            console.log(object)
 
             await user.updatePost(object)
             return response.QuerySuccess(res, "The post was updated successfully.")
 
         } catch (error) {
             if (error.message === 'Post not found.') return response.ItemNotFound(res, 'Not found a post with this id.')
-            if (error.message === 'Error updating post.') return response.BadRequest(res, 'Error updating post, make sure to submit the correct parameters.')
+            if (error.message === 'Error updating post.') return response.ResConflict(res, 'Error updating post, You are not the author of this post.')
             return response.ErrorInternal(res, error.message)
         }
     }
