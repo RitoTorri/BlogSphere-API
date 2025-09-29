@@ -73,6 +73,7 @@ ACCESS_KEY=hey_secret
 | author_post | VARCHAR | Email del autor (FK a users) |
 | title | VARCHAR | Título del post |
 | content | TEXT | Contenido del post |
+| photo | TEXT | URL de la foto del post |
 | active | BOOLEAN | Estado del post |
 | date_created | TIMESTAMP | Fecha de creación |
 

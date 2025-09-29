@@ -5,7 +5,7 @@ class PostsModel {
 
     async getPostsByAuthor(object) {
         try {
-            const query = 'SELECT author_post, id AS "id_Post", title, content, date_created FROM posts WHERE author_post = $1 AND active = true ORDER BY id ASC'
+            const query = 'SELECT author_post, id AS "id_Post", title, content, photo, date_created FROM posts WHERE author_post = $1 AND active = true ORDER BY id ASC'
 
             const result = await pool.query(query, [object.author_post])
             return result.rows
@@ -25,8 +25,8 @@ class PostsModel {
 
     async createPost(object) {
         try {
-            const query = 'INSERT INTO posts (author_post, title, content) VALUES ($1, $2, $3) RETURNING author_post, id, title, content, date_created'
-            const params = [object.author_post, object.title, object.content]
+            const query = 'INSERT INTO posts (author_post, title, content, photo) VALUES ($1, $2, $3, $4) RETURNING author_post, id, title, content, photo, date_created'
+            const params = [object.author_post, object.title, object.content, object.photo]
 
             const result = await pool.query(query, params)
             if (result.rows.length === 0) throw new Error('Post not created.')

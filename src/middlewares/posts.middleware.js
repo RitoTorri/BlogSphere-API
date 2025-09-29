@@ -8,7 +8,7 @@ const CreatePost = (req, res, next) => {
     let error = false
     let details = []
 
-    if (!title || !content) return response.BadRequest(res, 'The title and content are required.')
+    if (!title && !content) return response.BadRequest(res, 'The title and content are required.')
 
     if (validator.formatDataEmpty(title)) {
         error = true

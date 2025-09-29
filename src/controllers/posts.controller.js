@@ -25,9 +25,8 @@ class PostsController {
 
     async createPost(req, res) {
         try {
-            const { title, content } = req.body
-            const object = { author_post: req.user.email, title: title, content: content }
-            console.log(object)
+            const { title, content, photo } = req.body
+            const object = { author_post: req.user.email, title: title, content: content, photo: photo }
 
             const result = await user.createPost(object)
             return response.ItemCreated(res, result)

@@ -121,6 +121,10 @@
                 "content": {
                   "type": "string",
                   "example": "Este es un contenido de ejemplo"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
                 }
               }
             }
