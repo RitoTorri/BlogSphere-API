@@ -61,7 +61,7 @@ ACCESS_KEY=hey_secret
 | password | VARCHAR | Contraseña encriptada |
 | name | VARCHAR | Nombre del usuario |
 | lastname | VARCHAR | Apellido del usuario |
-| photo | VARCHAR | URL de la foto de perfil |
+| photo | TEXT | URL de la foto de perfil |
 | biography | TEXT | Biografía del usuario |
 | active | BOOLEAN | Estado del usuario |
 | date_created | TIMESTAMP | Fecha de creación |
@@ -291,6 +291,3 @@ Authorization: Bearer eyJJIUz...
 3. Reporta cualquier issue que encuentres
 4. ¡Contribuye con mejoras!
 
----
-
-**¡Espero que disfrutes usando esta API! 🎉**
