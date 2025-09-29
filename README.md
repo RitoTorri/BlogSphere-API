@@ -157,7 +157,8 @@ Authorization: Bearer eyJJIUz...
 ```json
 {
   "title": "Este es un título de ejemplo",
-  "content": "Este es un contenido de ejemplo"
+  "content": "Este es un contenido de ejemplo",
+  "photo": "url de la foto del post"
 }
 ```
 
