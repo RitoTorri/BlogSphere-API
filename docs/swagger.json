@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Blog API",
+    "title": "blog-sphere-api",
     "version": "1.0.0",
     "description": "Esta API permite subir y visualizar posts en un blog. Ademas de permitir modificar tu usaurio, buscar otros usuarios y hacer comentarios a otros posts/blogs."
   },
