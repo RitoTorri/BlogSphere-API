@@ -90,42 +90,67 @@ ACCESS_KEY=tu_clave_secreta_jwt
 
 ---
 
-## 🗃️ Esquema de Base de Datos
+## 🗃️ Código de la base de datos 
 
-### **Tabla: Users**
-| Campo | Tipo | Restricciones | Descripción |
-|-------|------|---------------|-------------|
-| `id` | SERIAL | PRIMARY KEY | Identificador único |
-| `email` | VARCHAR(255) | UNIQUE, NOT NULL | Correo electrónico |
-| `password` | VARCHAR(255) | NOT NULL | Contraseña encriptada |
-| `name` | VARCHAR(100) | NOT NULL | Nombre del usuario |
-| `lastname` | VARCHAR(100) | NOT NULL | Apellido del usuario |
-| `photo` | TEXT | NULL | URL de la foto de perfil |
-| `biography` | TEXT | NULL | Biografía del usuario |
-| `active` | BOOLEAN | DEFAULT true | Estado de la cuenta |
-| `date_created` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    photo TEXT,
+    biography TEXT,
+    active BOOLEAN DEFAULT TRUE,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-### **Tabla: Posts**
-| Campo | Tipo | Restricciones | Descripción |
-|-------|------|---------------|-------------|
-| `id` | SERIAL | PRIMARY KEY | Identificador único |
-| `author_post` | VARCHAR(255) | FOREIGN KEY | Email del autor |
-| `title` | VARCHAR(255) | NOT NULL | Título del post |
-| `content` | TEXT | NOT NULL | Contenido del post |
-| `photo` | TEXT | NULL | URL de la imagen |
-| `active` | BOOLEAN | DEFAULT true | Estado del post |
-| `date_created` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    author_post VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    photo TEXT,
+    active BOOLEAN DEFAULT TRUE,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- FOREIGN KEY con CASCADE para actualizaciones
+    CONSTRAINT fk_posts_author 
+        FOREIGN KEY (author_post) 
+        REFERENCES users(email) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
 
-### **Tabla: Comments**
-| Campo | Tipo | Restricciones | Descripción |
-|-------|------|---------------|-------------|
-| `id` | SERIAL | PRIMARY KEY | Identificador único |
-| `author_comment` | VARCHAR(255) | FOREIGN KEY | Email del autor |
-| `post_id` | INTEGER | FOREIGN KEY | ID del post |
-| `content` | TEXT | NOT NULL | Contenido del comentario |
-| `active` | BOOLEAN | DEFAULT true | Estado del comentario |
-| `date_created` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    author_comment VARCHAR(255) NOT NULL,
+    post_id INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    active BOOLEAN DEFAULT TRUE,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- FOREIGN KEY para el autor con CASCADE
+    CONSTRAINT fk_comments_author 
+        FOREIGN KEY (author_comment) 
+        REFERENCES users(email) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE,
+    
+    -- FOREIGN KEY para el post
+    CONSTRAINT fk_comments_post 
+        FOREIGN KEY (post_id) 
+        REFERENCES posts(id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
 
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_posts_author ON posts(author_post);
+CREATE INDEX idx_posts_date ON posts(date_created);
+CREATE INDEX idx_comments_post ON comments(post_id);
+CREATE INDEX idx_comments_author ON comments(author_comment);
+```
 ---
 
 ## 📚 Documentación de la API
