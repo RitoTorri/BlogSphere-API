@@ -155,13 +155,6 @@ http://localhost:3000/api-docs
 
 ### **✨ Características de la Documentación**
 
-| 🎯 | Característica |
-|----|----------------|
-| ✅ | **Siempre actualizada** con el código |
-| 🧪 | **Pruebas en tiempo real** desde el navegador |
-| 📖 | **Documentación completa** de todos los endpoints |
-| 🔐 | **Autenticación integrada** para pruebas seguras |
-
 </div>
 
 ---
@@ -173,19 +166,6 @@ http://localhost:3000/api-docs
 ¡Tu contribución es **bienvenida y valorada**! 🎁
 
 </div>
-
-### **Proceso de Contribución**
-
-1. **🔍 Prueba la API** - Asegúrate de replicar el issue o probar la nueva funcionalidad
-2. **📝 Reporta claramente** - Incluye pasos específicos para reproducir
-3. **💡 Propone soluciones** - Sugiere fixes o mejoras
-4. **🚀 Envía PRs** - Contribuye directamente con código
-
-### **Áreas de Mejora**
-- 🔒 **Seguridad**: Mejoras en autenticación y autorización
-- 🚀 **Rendimiento**: Optimización de consultas y respuesta
-- 📊 **Nuevas Features**: Funcionalidades adicionales
-- 🐛 **Bug Fixes**: Corrección de issues existentes
 
 ---
 
@@ -203,11 +183,6 @@ Abre un *issue* en el repositorio o contacta al mantenedor.
 
 </div>
 
----
-
-<div align="center">
-
-### **Desarrollado con ❤️ y las mejores tecnologías**
 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=nodedotjs&logoColor=white)
