@@ -26,9 +26,6 @@ Esta es una API REST que permite gestionar un sistema de blog donde los usuarios
 # Clonar el repositorio
 git clone https://github.com/RitoTorri/Api-Rest-Blog
 
-# Navegar al directorio
-cd Api-Rest-Blog
-
 # Instalar dependencias
 yarn install
 
