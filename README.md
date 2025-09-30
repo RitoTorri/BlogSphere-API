@@ -10,7 +10,7 @@
 
 ## 🌟 Descripción
 
-Una **API REST moderna y escalable** que potencia un sistema de blog completo donde los usuarios pueden crear, compartir e interactuar con contenido de manera segura y eficiente.
+Una API REST moderna y robusta diseñada para potenciar plataformas de blogging colaborativas. Ofrece un sistema completo de gestión de contenido donde los usuarios pueden expresar sus ideas, interactuar con la comunidad y construir su presencia digital.
 
 ---
 
@@ -18,12 +18,12 @@ Una **API REST moderna y escalable** que potencia un sistema de blog completo do
 
 <div align="center">
 
-| 🎯 Funcionalidad | 📋 Descripción |
+| Funcionalidad | Descripción |
 |------------------|----------------|
-| **✍️ Gestión de Posts** | Crear, editar, eliminar y visualizar publicaciones propias y de otros usuarios |
-| **🔍 Búsqueda Inteligente** | Encontrar usuarios rápidamente mediante búsquedas por nombre |
-| **💬 Sistema de Comentarios** | Interactuar con publicaciones mediante comentarios gestionables |
-| **👤 Perfiles Personalizables** | Biografía, foto de perfil y información personalizable |
+| **Gestión de Posts** | Crear, editar, eliminar y visualizar publicaciones propias y de otros usuarios |
+| **Búsqueda Inteligente** | Encontrar usuarios rápidamente mediante búsquedas por nombre |
+| **Sistema de Comentarios** | Interactuar con publicaciones mediante comentarios gestionables |
+| **Perfiles Personalizables** | Biografía, foto de perfil y información personalizable |
 
 </div>
 
@@ -50,13 +50,7 @@ Una **API REST moderna y escalable** que potencia un sistema de blog completo do
 
 ---
 
-## 🚀 Comenzando
-
-### **Prerrequisitos**
-
-- 📦 **Node.js** (versión 18 o superior)
-- 🐘 **PostgreSQL** (versión 16 o superior)
-- 🧶 **Yarn** o **npm**
+## 🚀 Instalación
 
 ### **Instalación Rápida**
 
@@ -65,20 +59,14 @@ Una **API REST moderna y escalable** que potencia un sistema de blog completo do
 git clone https://github.com/RitoTorri/Api-Rest-Blog
 
 # 2. Navegar al directorio
-cd Api-Rest-Blog
+cd BlogSohere-API
 
 # 3. Instalar dependencias
 yarn install
 
-# 4. Configurar variables de entorno
-cp .env.example .env
-
 # 5. Ejecutar la aplicación
 yarn dev
 ```
-
-🎉 **¡Listo!** La aplicación estará corriendo y podrás acceder a la documentación interactiva.
-
 ---
 
 ## ⚙️ Configuración
@@ -104,7 +92,7 @@ ACCESS_KEY=tu_clave_secreta_jwt
 
 ## 🗃️ Esquema de Base de Datos
 
-### **👥 Tabla: Users**
+### **Tabla: Users**
 | Campo | Tipo | Restricciones | Descripción |
 |-------|------|---------------|-------------|
 | `id` | SERIAL | PRIMARY KEY | Identificador único |
@@ -117,7 +105,7 @@ ACCESS_KEY=tu_clave_secreta_jwt
 | `active` | BOOLEAN | DEFAULT true | Estado de la cuenta |
 | `date_created` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
 
-### **📄 Tabla: Posts**
+### **Tabla: Posts**
 | Campo | Tipo | Restricciones | Descripción |
 |-------|------|---------------|-------------|
 | `id` | SERIAL | PRIMARY KEY | Identificador único |
@@ -128,7 +116,7 @@ ACCESS_KEY=tu_clave_secreta_jwt
 | `active` | BOOLEAN | DEFAULT true | Estado del post |
 | `date_created` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
 
-### **💬 Tabla: Comments**
+### **Tabla: Comments**
 | Campo | Tipo | Restricciones | Descripción |
 |-------|------|---------------|-------------|
 | `id` | SERIAL | PRIMARY KEY | Identificador único |
@@ -144,7 +132,7 @@ ACCESS_KEY=tu_clave_secreta_jwt
 
 <div align="center">
 
-### **🔗 Acceso a la Documentación Interactiva**
+### **Acceso a la Documentación Interactiva**
 
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 
@@ -152,9 +140,6 @@ ACCESS_KEY=tu_clave_secreta_jwt
 ```
 http://localhost:3000/api-docs
 ```
-
-### **✨ Características de la Documentación**
-
 </div>
 
 ---
@@ -169,23 +154,5 @@ http://localhost:3000/api-docs
 
 ---
 
-<div align="center">
-
-## 📞 Soporte
-
-**¿Preguntas o problemas?**  
-Abre un *issue* en el repositorio o contacta al mantenedor.
-
----
-
 **¿Te gusta este proyecto?**  
 ¡Dale una ⭐ en GitHub!
-
-</div>
-
-
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=nodedotjs&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-
-</div>
