@@ -9,9 +9,10 @@ Esta es una API REST que permite gestionar un sistema de blog donde los usuarios
 - 💬 **Comentarios**: Comentar y eliminar tus comentarios en posts de otros usuarios
 
 ## 🛠 Tecnologías Implementadas
-- **JavaScript** - Lenguaje de programación
-- **PostgreSQL** - Base de datos relacional
-- **JWT** - Autenticación por tokens
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-336791?style=for-the-badge&logo=postgresql)
+![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=nodedotjs)
+![Express](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express)
 
 ## 📥 Instalación
 
