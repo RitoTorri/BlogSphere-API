@@ -1,4 +1,4 @@
-# 🚀 API Blog - Sistema de Gestión de Contenidos
+# 🚀 BlogSphere-API
 
 <div align="center">
 
