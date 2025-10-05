@@ -26,6 +26,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan("dev"))
+} else { app.use(morgan("combined")) }
+
 // Rutas
 const urlBase = "/blog/api"
 

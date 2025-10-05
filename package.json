@@ -2,9 +2,11 @@
   "name": "BlogSphere-API",
   "version": "1.0.0",
   "main": "src/server.js",
+  "repository": "https://github.com/RitoTorri/BlogSphere-API",
+  "author": "RitoTorri <cortezfrancisco025@gmail.com> (https://github.com/RitoTorri)",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "SET NODE_ENV=production && node src/server.js",
+    "dev": "SET NODE_ENV=development && nodemon src/server.js"
   },
   "license": "MIT",
   "dependencies": {
