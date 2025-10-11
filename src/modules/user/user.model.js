@@ -1,8 +1,5 @@
-const { pool } = require('../config/db')
-const GenToken = require('../utils/tokenGen')
-
-const modelPosts = require("./posts.model")
-const Post = new modelPosts()
+const { pool } = require('../../config/db')
+const GenToken = require('../../shared/utils/tokenGen')
 
 class UsersModel {
     constructor() { }

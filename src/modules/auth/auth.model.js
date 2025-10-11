@@ -1,6 +1,6 @@
-const { pool } = require('../config/db')
+const { pool } = require('../../config/db')
 const bcrypt = require('bcrypt')
-const GenToken = require('../utils/tokenGen')
+const GenToken = require('../../shared/utils/tokenGen')
 
 class AuthModel {
     constructor() { }

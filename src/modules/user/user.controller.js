@@ -1,6 +1,6 @@
-const response = require('../utils/responses')
+const response = require('../../shared/utils/responses')
 
-const UserService = require('../services/user.service')
+const UserService = require('./user.service')
 const user = new UserService()
 
 class UserController {

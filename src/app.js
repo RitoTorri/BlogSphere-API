@@ -9,11 +9,10 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('../docs/swagger.json')
 
 // Rutas de la API
-const posts = require('./routes/posts.route')
-const auth = require('./routes/auth.route')
-const register = require('./routes/register.route')
-const user = require('./routes/user.route')
-const { url } = require('inspector')
+const posts = require('./modules/posts/posts.route')
+const auth = require('./modules/auth/auth.route')
+const register = require('./modules/register/register.route')
+const user = require('./modules/user/user.route')
 
 // inicializacion del app
 const app = express()

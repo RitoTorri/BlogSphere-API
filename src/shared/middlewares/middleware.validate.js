@@ -1,9 +1,7 @@
-const response = require('../utils/responses')
-const validator = require('../utils/formatData')
-
 const jwt = require('jsonwebtoken')
 const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
+const response = require('../utils/responses')
 
 const ValidateTokenAccess = (req, res, next) => {
     const { authorization } = req.headers
@@ -27,27 +25,6 @@ const ValidateTokenAccess = (req, res, next) => {
     }
 }
 
-const ValidateLogin = (req, res, next) => {
-    const { email, password } = req.body
-    let error = false
-    let details = []
-
-    if (!email || !password) {
-        return response.BadRequest(res, 'The email and password are required.')
-    }
-
-    if (validator.formatEmailInvalid(email)) {
-        error = true
-        details.push('The email is invalid.')
-    }
-
-    if (validator.formatPasswordInvalid(password)) {
-        error = true
-        details.push('The password is invalid.')
-    }
-
-    if (error) return response.ParametersInvalid(res, details)
-    next()
+module.exports = {
+    ValidateTokenAccess
 }
-
-module.exports = { ValidateTokenAccess, ValidateLogin }

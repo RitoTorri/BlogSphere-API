@@ -1,6 +1,6 @@
 // requires
-const response = require('../utils/responses')
-const validator = require('../utils/formatData')
+const response = require('../../shared/utils/responses')
+const validator = require('../../shared/utils/formatData')
 
 const CreatePost = (req, res, next) => {
     const { title, content } = req.body

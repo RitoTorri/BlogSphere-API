@@ -1,7 +1,7 @@
 // requires
-const response = require('../utils/responses')
+const response = require('../../shared/utils/responses')
 
-const User = require('../services/user.service')
+const User = require('./posts.service')
 const user = new User()
 
 

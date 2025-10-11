@@ -1,7 +1,7 @@
-const response = require('../utils/responses')
+const response = require('../../shared/utils/responses')
 
 // instancias de Services
-const User = require('../services/user.service')
+const User = require('./register.service')
 const user = new User()
 
 class RegisterController {

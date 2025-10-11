@@ -1,10 +1,10 @@
 // requires
 const express = require('express')
 const router = express.Router()
-const middleware = require('../middlewares/auth.middleware')
+const middleware = require('./auth.middleware')
 
 // instancias de modelos
-const AuthController = require('../controllers/auth.controller')
+const AuthController = require('./auth.controller')
 const controller = new AuthController()
 
 // Routes

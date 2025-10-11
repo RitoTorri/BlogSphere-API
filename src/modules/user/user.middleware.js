@@ -1,5 +1,5 @@
-const response = require('../utils/responses')
-const validator = require('../utils/formatData')
+const response = require('../../shared/utils/responses')
+const validator = require('../../shared/utils/formatData')
 
 const GetUsers = async (req, res, next) => {
     const { name } = req.params
